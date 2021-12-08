@@ -1,0 +1,15 @@
+# Test specification for method
+#
+# boolean fbpost(String message, ArrayList<Image> photos, String location, String datetime, String privacy)
+#
+# See the assignment worksheet for a description of the method's behaviour.
+#
+# Do not change this file name.
+#
+# Make sure that the file is a valid input for TSL Generator. You can ensure this by executing:
+#
+# ./Binaries/TSLgenerator-mac fbpost.txt
+# ./Binaries/TSLgenerator-linux fbpost.txt
+# Binaries/TSLgenerator-win8.exe fbpost.txt
+#
+# The correct execution of TSL Generator should produce the resulting file fbpost.txt.tsl. You must include this file in your submission in this same directory.
