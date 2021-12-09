@@ -22,6 +22,15 @@ public class UtilsTest {
 //        assertEquals(expected, actual);
 //    }
 
+	@Test
+    void testUtils() { /// may need to del
+		
+        final String s = "--hello";
+        final String expected = "hello";
+        final String actual = u.stripLeadingHyphens(s);
+        assertEquals(expected, actual);
+    }
+	
     @Test
     void testStripLeadingHyphenWithHyphensAtStartString() {
         final String s = "--hello";
@@ -127,8 +136,8 @@ public class UtilsTest {
             Utils.validateOption(s);
         });
 
-        String expected = "Illegal option name '/'";
-        String actual = exception.getMessage();
+        final String expected = "Illegal option name '/'";
+        final String actual = exception.getMessage();
         assertTrue(actual.contains(expected));
     }
 
@@ -187,8 +196,8 @@ public class UtilsTest {
             Utils.validateOption(s);
         });
 
-        String expected = "The option '" + s + "' contains an illegal " + "character : '" + "/" + "'";
-        String actual = exception.getMessage();
+        final String expected = "The option '" + s + "' contains an illegal " + "character : '" + "/" + "'";
+        final String actual = exception.getMessage();
         assertTrue(actual.contains(expected));
     }
 
