@@ -24,7 +24,7 @@ public class UtilsTest {
 
 	@Test
     void testUtils() { /// may need to del
-		
+		Utils u = new Utils();
         final String s = "--hello";
         final String expected = "hello";
         final String actual = u.stripLeadingHyphens(s);
