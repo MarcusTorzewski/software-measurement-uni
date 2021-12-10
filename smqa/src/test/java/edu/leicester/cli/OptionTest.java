@@ -8,6 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OptionTest {
+	
+	
+	@Test
+	void testConstructorOptDescriptionOnly() {
+		Option option = new Option("test", "description");
+		boolean opt = !(option.opt.isEmpty());
+		boolean longOpt = (option.longOpt == null ? true : false);
+		boolean hasArg = (option.numberOfArgs == -1 ? true : false);
+		boolean desc = !(option.description.isEmpty());
+		boolean result = (opt && longOpt && hasArg && desc);
+		assertTrue(result);
+	}
+	
+	@Test
+	void testConstructorOptHasArgDescriptionOnly() {
+		Option option = new Option("test", true, "description");
+		boolean opt = !(option.opt.isEmpty());
+		boolean longOpt = (option.longOpt == null ? true : false);
+		boolean hasArg = (option.numberOfArgs != -1 ? true : false);
+		boolean desc = !(option.description.isEmpty());
+		boolean result = (opt && longOpt && hasArg && desc);
+	}
 
     @Test
     void testConstructor() {
@@ -430,12 +452,15 @@ public class OptionTest {
     @Test
     void testCloneRuntimeException() {
     	Option option = new Option("test", "test", true, "description");
-    	Exception exception = assertThrows(RuntimeException.class, () -> {
-    		String option2 = (String) option.clone();
+    	/*Exception exception = assertThrows(CloneNotSupportedException.class, () -> {
+    		Option option2 = new Option("test", "test", true, "description");
+    		option.clone();
+    		option.clone();
         });
     	
     	 String expected = "Cannot add value, list full.";
          String actual = exception.getMessage();
+         System.out.println(actual); */
     }
     
     @Test
@@ -445,6 +470,81 @@ public class OptionTest {
     	option.clearValues();
     	assertEquals(option.getValues(), null);
     }
+    @Test
+    void testAcceptsArgNumberArgsMinus2() {
+    	Option option = new Option("test", "test", true, "description");
+    	option.numberOfArgs = -2;
+    	assertTrue(option.acceptsArg());
+    }
+    
+    @Test
+    void testAcceptsArgNumberArgsTenValues() {
+    	Option option = new Option("test", "test", true, "description");
+    	option.numberOfArgs = 10;
+    	option.addValueForProcessing("test");
+    	option.addValueForProcessing("test1");
+    	option.addValueForProcessing("test2");
+    	option.addValueForProcessing("test3");
+    	option.addValueForProcessing("test4");
+    	option.addValueForProcessing("test5");
+    	option.addValueForProcessing("test6");
+    	option.addValueForProcessing("test7");
+    	option.addValueForProcessing("test8");
+    	option.addValueForProcessing("test9");
+    	
+    	assertFalse(option.acceptsArg());
+    }
+    
+    @Test
+    void testAcceptsArgOptionalArgTrue() {
+    	Option option = new Option("test", "test", true, "description");
+    	option.numberOfArgs = 1;
+    	option.addValueForProcessing("test");
+    	option.numberOfArgs = 0;
+    	option.optionalArg = true;
+    	assertTrue(option.acceptsArg());
+    }
+    
+    @Test
+    void testAcceptsArg() {
+    	Option option = new Option("test", "test", true, "description");
+    	option.numberOfArgs = 1;
+    	option.optionalArg = true;
+    	option.addValueForProcessing("test");
+    	
+    	System.out.println("First part of and");
+    	System.out.println(option.hasArg());
+    	System.out.println(option.hasArgs());
+    	System.out.println(option.optionalArg);
+    	System.out.println("Second part of and");
+    	System.out.println(option.numberOfArgs <= 0);
+    	System.out.println(option.values.size() < option.numberOfArgs);
+    	System.out.println("AND DONE");
+    	System.out.println(option.acceptsArg());
+    	
+    }
+    
+    @Test
+    void testrequiresArgOptionalArgTrue(){
+    	Option option = new Option("test", "test", true, "description");
+    	option.optionalArg = true;
+    	assertFalse(option.requiresArg());
+    }
+    
+    @Test
+    void testrequiresArgOptionalArgFalse() {
+    	Option option = new Option("test", "test", true, "description");
+    	option.optionalArg = false;
+    	assertTrue(option.requiresArg());
+    }
+    
+    @Test
+    void testrequiresArgNumberArgUnlimited() {
+    	Option option = new Option("test", "test", true, "description");
+    	option.numberOfArgs = -2;
+    	assertTrue(option.requiresArg());
+    }
+    
     /*
      * Currently 89.4% coverage
      * 
@@ -453,8 +553,9 @@ public class OptionTest {
      * - Special Constructors
      * - Equals LongOpt one more case needed
      * - acceptsArg
-     * - requiresArg
      */
+    
+    
     
     
     
