@@ -119,14 +119,6 @@ public class UtilsTest {
     @Test
     void testValidateOptionWithValidSingleCharacterOption() {
         final String s = "a";
-        // Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-        //     Utils.validateOption(s);
-        // });
-        
-        // String expected = "Illegal option name '?'";
-        // String actual = exception.getMessage();
-        // assertTrue(actual.contains(expected));
-
         assertDoesNotThrow(() -> {
             Utils.validateOption(s);
         });
@@ -135,14 +127,6 @@ public class UtilsTest {
     @Test
     void testValidateOptionWithValidSingleCharacterQuestionmarkOption() {
         final String s = "?";
-        // Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-        //     Utils.validateOption(s);
-        // });
-        
-        // String expected = "Illegal option name '?'";
-        // String actual = exception.getMessage();
-        // assertTrue(actual.contains(expected));
-
         assertDoesNotThrow(() -> {
             Utils.validateOption(s);
         });
@@ -151,14 +135,6 @@ public class UtilsTest {
     @Test
     void testValidateOptionWithValidSingleCharacterAtSymbolOption() {
         final String s = "@";
-        // Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-        //     Utils.validateOption(s);
-        // });
-
-        // String expected = "Illegal option name '@'";
-        // String actual = exception.getMessage();
-        // assertTrue(actual.contains(expected));
-
         assertDoesNotThrow(() -> {
             Utils.validateOption(s);
         });
