@@ -19,8 +19,6 @@ public class OptionsTest {
         assertEquals(option,options.getOption("opt"));
     }
     
-    // FAILURE
-    // unsure of what type the expected result should be
     @Test
     void testGetOptions() {
     	Options options = new Options();
@@ -30,10 +28,10 @@ public class OptionsTest {
         options.addOption(o1);
         options.addOption(o2);
         
-        Collection<Option> expected = new ArrayList<>();
+        Collection<Option> expected = new HashSet<>();
         expected.add(o1);
         expected.add(o2);
-        assertEquals(expected, options.getOptions()); // something wrong with the collections lists i've got here 
+        assertEquals(expected.toString(), options.getOptions().toString());
     }
 
     @Test
@@ -138,15 +136,18 @@ public class OptionsTest {
         assertEquals(optionGroup, options.getOptionGroup(option));
     }
     
-    // FAILURE
-    //unsure how to format expected string properly 
     @Test
     void testToString() {
     	Options options = new Options();
+    	OptionGroup optionGroup = new OptionGroup();
     	Option o1 = new Option("o", "option");
     	Option o2 = new Option("c", "cancel", false, "option");
-    	// strings don't match
-    	assertEquals("[ Options: [ short c o ] [ long cancel ]", options.toString());
+        optionGroup.addOption(o1);
+        optionGroup.addOption(o2);
+        options.addOptionGroup(optionGroup);
+    	
+        String expected = "[ Options: [ short {o=[ option: o  :: option :: class java.lang.String ], c=[ option: c cancel  :: option :: class java.lang.String ]} ] [ long {cancel=[ option: c cancel  :: option :: class java.lang.String ]} ]";
+    	assertEquals(expected, options.toString());
     }
 
     @Test

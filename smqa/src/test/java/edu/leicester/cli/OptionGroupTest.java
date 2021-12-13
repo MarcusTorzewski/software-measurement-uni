@@ -3,7 +3,6 @@ package edu.leicester.cli;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.Iterator;
 import java.util.HashSet;
 
@@ -57,10 +56,10 @@ public class OptionGroupTest {
         optionGroup.addOption(o);
         assertEquals("[-Option Nice option]", optionGroup.toString());
 
-        Set<String> expected = new HashSet<>();
+        Collection<String> expected = new HashSet<>();
         expected.add("Option");
         final Collection<String> actual = optionGroup.getNames();
-        assertEquals(expected, actual);
+        assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
@@ -78,14 +77,14 @@ public class OptionGroupTest {
         optionGroup.addOption(o5);
         assertEquals("[-Option_1 Nice option, -Option_2 Good option, -Option_3 Great option, -Option_4 Cool option, -Option_5 Bad option]", optionGroup.toString());
 
-        Set<String> expected = new HashSet<>();
+        Collection<String> expected = new HashSet<>();
         expected.add("Option_1");
         expected.add("Option_2");
         expected.add("Option_3");
         expected.add("Option_4");
         expected.add("Option_5");
         final Collection<String> actual = optionGroup.getNames();
-        assertEquals(expected, actual);
+        assertEquals(expected.toString(), actual.toString());
     }
 
     @Test
@@ -120,13 +119,8 @@ public class OptionGroupTest {
         optionGroup.addOption(o5);
         assertEquals("[-Option_1 Nice option, -Option_2 Good option, -Option_3 Great option, -Option_4 Cool option, -Option_5 Bad option]", optionGroup.toString());
 
-        // Set<Option> expected = new HashSet<>(Arrays.asList(o1,o2,o3,o4,o5));
-        // final Collection<Option> actual = optionGroup.getOptions();
-        // assertEquals(expected, actual);
-
         final Iterator<Option> iter = optionGroup.getOptions().iterator();
 
-        // while (iter.hasNext())
         for (int i = 1; i <= 5; i++)
         {
             final Option actual = iter.next();
