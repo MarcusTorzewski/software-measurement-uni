@@ -9,7 +9,6 @@ import java.util.List;
 
 public class OptionTest {
 	
-	
 	@Test
 	void testConstructorOptDescriptionOnly() {
 		Option option = new Option("test", "description");

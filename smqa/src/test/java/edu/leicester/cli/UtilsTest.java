@@ -5,37 +5,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UtilsTest {
-
-//    @Test
-//    void testStripLeadingHyphensWithOnlyHyphens() {
-//        final String s = "----";
-//        final String expected = "--";
-//        final String actual = Utils.stripLeadingHyphens(s);
-//        assertEquals(expected, actual);
-//    }
-
-//    @Test
-//    void testStripLeadingHyphenWithOnlyOneHyphen() {
-//        final String s = "-";
-//        final String expected = "";
-//        final String actual = Utils.stripLeadingHyphens(s);
-//        assertEquals(expected, actual);
-//    }
-
-	@Test
-    void testUtils() { /// may need to del
-		Utils u = new Utils();
-        final String s = "--hello";
-        final String expected = "hello";
-        final String actual = u.stripLeadingHyphens(s);
-        assertEquals(expected, actual);
-    }
 	
     @Test
     void testStripLeadingHyphenWithHyphensAtStartString() {
+    	Utils u =  new Utils();
         final String s = "--hello";
         final String expected = "hello";
-        final String actual = Utils.stripLeadingHyphens(s);
+        final String actual = u.stripLeadingHyphens(s);
         assertEquals(expected, actual);
     }
     
@@ -122,7 +98,6 @@ public class UtilsTest {
     @Test
     void testValidateOptionWithNullOption() {
         final String s = null;
-        // Utils.validateOption(s);
         
         assertDoesNotThrow(() -> {
             Utils.validateOption(s);
