@@ -29,6 +29,7 @@ public class OptionTest {
 		boolean hasArg = (option.numberOfArgs != -1 ? true : false);
 		boolean desc = !(option.description.isEmpty());
 		boolean result = (opt && longOpt && hasArg && desc);
+		assertTrue(result);
 	}
 
     @Test
@@ -43,11 +44,11 @@ public class OptionTest {
     	assertEquals(option.numberOfArgs, 1); 	
     }
     
-    /*@Test
-    void testHasArgFalse() {
+    @Test
+    void testHasArgConstructorFalse() {
     	Option option = new Option("test", "test", false, "description");
-    	//assertEquals(option.numberOfArgs, null);
-    }*/
+    	assertEquals(option.numberOfArgs, -1);
+    }
     
     
     @Test
@@ -60,7 +61,6 @@ public class OptionTest {
     @Test
     void testgetKeyOpt() {
     	Option option = new Option("test1", "test", false, "description");
-    	//System.out.println(option.getKey());
     	String expected = "test1";
     	assertEquals(option.getKey(), expected);
     }
@@ -73,7 +73,7 @@ public class OptionTest {
     }
     
     @Test
-    void testSetType() {
+    void testSetGetType() {
     	Option option = new Option("test", "test", false, "description");
     	Class<Option> option2 = null;
     	option.setType(option2);
@@ -124,14 +124,8 @@ public class OptionTest {
     
     @Test
     void testHasArgNameFalse() {
-    	// Should return false
     	Option option = new Option("test", "test", false, "description");
     	boolean expected = false;
-    	assertEquals(option.hasArgName(), expected);
-    	
-    	// should return true
-    	option.setArgName("Testing");
-    	expected = true;
     	assertEquals(option.hasArgName(), expected);
     }
     
@@ -156,11 +150,8 @@ public class OptionTest {
     	Option option = new Option("test", "test", true, "description");
     	boolean expected = false;
     	assertEquals(option.hasArgs(), expected);
-    
-    	option.numberOfArgs = -2;
-    	expected = true;
-    	assertEquals(option.hasArgs(), expected);
     }
+    
     
     @Test
     void testHasArgsNumberOfArgs10(){
@@ -182,10 +173,6 @@ public class OptionTest {
     void testHasValueSeparatorEmptyValueSeperator() {
     	Option option = new Option("test", "test", true, "description");
     	boolean expected = false;
-    	assertEquals(option.hasValueSeparator(), expected);
-    	
-    	option.valuesep = 'h';
-    	expected = true;
     	assertEquals(option.hasValueSeparator(), expected);
     }
     
@@ -234,7 +221,7 @@ public class OptionTest {
     	option.numberOfArgs = 100;
     	option.addValueForProcessing("test test test test test");
     	int expected = 5;
-    	assertEquals(option.getValues().length, 5);
+    	assertEquals(option.getValues().length, expected);
     }
     
     @Test
@@ -360,7 +347,7 @@ public class OptionTest {
     }
     
     @Test
-    void testEqualsSame() {
+    void testEqualsSameTypeDifferentDescription() {
     	Option option = new Option("test", null, true, "description");
     	Option option2 = new Option("test", null, true, "description2");
     	assertEquals(option.equals(option2), true);
@@ -421,9 +408,6 @@ public class OptionTest {
     	assertEquals(option.equals(option2), false);
     }
     
-    /*
-     * NEEDS ONE MORE CASE
-     */
     
     @Test
     void testHashCodeSameCode() {
@@ -446,22 +430,6 @@ public class OptionTest {
     	assertEquals(option2, option);
     }
     
-    /*
-     * NEEDS FIXING
-     */
-    @Test
-    void testCloneRuntimeException() {
-    	Option option = new Option("test", "test", true, "description");
-    	/*Exception exception = assertThrows(CloneNotSupportedException.class, () -> {
-    		Option option2 = new Option("test", "test", true, "description");
-    		option.clone();
-    		option.clone();
-        });
-    	
-    	 String expected = "Cannot add value, list full.";
-         String actual = exception.getMessage();
-         System.out.println(actual); */
-    }
     
     @Test
     void testclearValues() {
@@ -470,6 +438,7 @@ public class OptionTest {
     	option.clearValues();
     	assertEquals(option.getValues(), null);
     }
+    
     @Test
     void testAcceptsArgNumberArgsMinus2() {
     	Option option = new Option("test", "test", true, "description");
@@ -506,25 +475,6 @@ public class OptionTest {
     }
     
     @Test
-    void testAcceptsArg() {
-    	Option option = new Option("test", "test", true, "description");
-    	option.numberOfArgs = 1;
-    	option.optionalArg = true;
-    	option.addValueForProcessing("test");
-    	
-    	System.out.println("First part of and");
-    	System.out.println(option.hasArg());
-    	System.out.println(option.hasArgs());
-    	System.out.println(option.optionalArg);
-    	System.out.println("Second part of and");
-    	System.out.println(option.numberOfArgs <= 0);
-    	System.out.println(option.values.size() < option.numberOfArgs);
-    	System.out.println("AND DONE");
-    	System.out.println(option.acceptsArg());
-    	
-    }
-    
-    @Test
     void testrequiresArgOptionalArgTrue(){
     	Option option = new Option("test", "test", true, "description");
     	option.optionalArg = true;
@@ -546,13 +496,11 @@ public class OptionTest {
     }
     
     /*
-     * Currently 89.4% coverage
+     * Currently 96%
      * 
      * TODO
-     * - Clone exception
-     * - Special Constructors
-     * - Equals LongOpt one more case needed
-     * - acceptsArg
+     * - Clone exception - never thrown so impossible
+     * 		- https://stackoverflow.com/questions/5430944/java-clone-operation-calling-super-clone
      */
     
     
