@@ -43,6 +43,273 @@ class HelpFormatterTest {
     // }
     
     @Test
+    void testRenderOptionsWithSetOptionComparatorNull() {
+    	HelpFormatter formatter = new HelpFormatter();
+        Comparator<Option> optionComparator = null;
+        formatter.setOptionComparator(optionComparator);
+
+        Comparator<Option> expected = null;
+        final Comparator<Option> actual = formatter.getOptionComparator();
+        assertEquals(expected, actual);
+        final StringBuffer sb = new StringBuffer();
+    	final int width = 9;
+        Option o1 = new Option("Option_1", "Nice option");
+        Option o2 = new Option("Option_2", "Good option");
+        Options options = new Options();
+        options.addOption(o1);
+        options.addOption(o2);
+    	final int leftPad = 0;
+    	final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option_1");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" Nice");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append("-Option_2");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" Good");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+    	final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+    	assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithWithOptionNameNullAndHasArgFalseAndHasLongOpt() {
+        HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+        final int width = 12;
+        Option o = new Option(null, "Option One", false, "Nice option");
+        Options options = new Options();
+        options.addOption(o);
+        final int leftPad = 0;
+        final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("   --Option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" OneNice");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+        expectedSb.append(System.getProperty("line.separator"));
+        final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+        assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithWithOptionDescriptionNull() {
+        HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+        final int width = 9;
+        Option o = new Option("Option", null);
+        Options options = new Options();
+        options.addOption(o);
+        final int leftPad = 0;
+        final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option");
+        final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+        assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithHasArgFalseAndHasLongOpt() {
+    	HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+    	final int width = 9;
+        Option o1 = new Option("Option_1", "Option One", false, "Nice option");
+        Option o2 = new Option("Option_2", "Option Two", false, "Good option");
+        Options options = new Options();
+        options.addOption(o1);
+        options.addOption(o2);
+    	final int leftPad = 0;
+    	final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option_1");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ,--Optio");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" n");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" OneNice");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append("-Option_2");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ,--Optio");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" n");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" TwoGood");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+    	final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+    	assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithHasArgTrueAndArgNameNull() {
+    	HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+    	final int width = 9;
+        Option o1 = new Option("Option_1", true, "Nice option");
+        Option o2 = new Option("Option_2", true, "Good option");
+        Options options = new Options();
+        options.addOption(o1);
+        options.addOption(o2);
+    	final int leftPad = 0;
+    	final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option_1");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" <arg>Nic");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" e option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append("-Option_2");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" <arg>Goo");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" d option");
+    	final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+    	assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithHasArgTrueAndHasLongOptAndArgNameNull() {
+    	HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+    	final int width = 9;
+        Option o1 = new Option("Option_1", "Option One", true, "Nice option");
+        Option o2 = new Option("Option_2", "Option Two", true, "Good option");
+        Options options = new Options();
+        options.addOption(o1);
+        options.addOption(o2);
+    	final int leftPad = 0;
+    	final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option_1");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ,--Optio");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" n One");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" <arg>Nic");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" e option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append("-Option_2");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ,--Optio");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" n Two");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" <arg>Goo");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" d option");
+    	final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+    	assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithHasArgTrueAndArgNameEmptyString() {
+    	HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+    	final int width = 9;
+        Option o1 = new Option("Option_1", true, "Nice option");
+        Option o2 = new Option("Option_2", true, "Good option");
+        o1.setArgName("");
+        o2.setArgName("");
+        Options options = new Options();
+        options.addOption(o1);
+        options.addOption(o2);
+    	final int leftPad = 0;
+    	final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option_1");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" Nice");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append("-Option_2");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" Good");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+    	final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+    	assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+    @Test
+    void testRenderOptionsWithHasArgTrueAndHasLongOptAndArgName() {
+    	HelpFormatter formatter = new HelpFormatter();
+        final StringBuffer sb = new StringBuffer();
+    	final int width = 9;
+        Option o1 = new Option("Option_1", "Option One", true, "Nice option");
+        Option o2 = new Option("Option_2", "Option Two", true, "Good option");
+        o1.setArgName("Time");
+        o2.setArgName("Time");
+        Options options = new Options();
+        options.addOption(o1);
+        options.addOption(o2);
+    	final int leftPad = 0;
+    	final int descPad = 0;
+        final StringBuffer expectedSb = new StringBuffer();
+        expectedSb.append("-Option_1");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ,--Optio");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" n One");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" <Time>Ni");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ce");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append("-Option_2");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" ,--Optio");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" n Two");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" <Time>Go");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" od");
+        expectedSb.append(System.getProperty("line.separator"));
+        expectedSb.append(" option");
+    	final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+    	assertEquals(expectedSb.length(), actualSb.length());
+        assertEquals(expectedSb.toString(), actualSb.toString());
+    }
+
+//    @Test
+//    void testRenderOptionsWith() {
+//        HelpFormatter formatter = new HelpFormatter();
+//        final StringBuffer sb = new StringBuffer();
+//        final int width = 9;
+//        Option o = new Option("", "");
+//        Options options = new Options();
+//        options.addOption(o);
+//        final int leftPad = 0;
+//        final int descPad = 0;
+//        final StringBuffer expectedSb = new StringBuffer();
+//        final StringBuffer actualSb = formatter.renderOptions(sb, width, options, leftPad, descPad);
+//        // assertEquals(expectedSb.length(), actualSb.length());
+//        assertEquals(expectedSb.toString(), actualSb.toString());
+//    }
+
+    @Test
     void testRenderWrappedTextWithWidthEqualToStringLengthAndPlainString() {
     	HelpFormatter formatter = new HelpFormatter();
         final StringBuffer sb = new StringBuffer();

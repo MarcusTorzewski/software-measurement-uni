@@ -23,13 +23,13 @@ public class UtilsTest {
         assertEquals(expected, actual);
     }
     
-        @Test
-        void testStripLeadingHyphenWithOnlyString() {
-            final String s = "hello";
-            final String expected = "hello";
-            final String actual = Utils.stripLeadingHyphens(s);
-            assertEquals(expected, actual);
-        }
+    @Test
+    void testStripLeadingHyphenWithOnlyString() {
+        final String s = "hello";
+        final String expected = "hello";
+        final String actual = Utils.stripLeadingHyphens(s);
+        assertEquals(expected, actual);
+    }
 
     @Test
     void testStripLeadingHyphensWithNullInput() {
