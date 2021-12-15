@@ -23,17 +23,472 @@ class HelpFormatterTest {
         assertEquals(expected, actual);
     }
 
-    // @Test
-    // void testSetOptionComparatorAndGetOptionComparator() {
-    //     HelpFormatter formatter = new HelpFormatter();
-    //     Comparator<Option> optionComparator = null;
-    //     formatter.setOptionComparator(optionComparator);
+    @Test
+    void testPrintHelpWithCmdLineSyntaxNull() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 6;
+    		final String cmdLineSyntax = null;
+            final String header = "header";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "footer";
+            final boolean autoUsage = false;
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+    		    formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+            });
+    		pw.close();
+
+            final String expected = "cmdLineSyntax not provided";
+            final String actual = exception.getMessage();
+            assertTrue(actual.contains(expected));
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
+    @Test
+    void testPrintHelpWithCmdLineSyntaxEmptyString() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 6;
+    		final String cmdLineSyntax = "";
+            final String header = "header";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "footer";
+            final boolean autoUsage = false;
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+    		    formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+            });
+    		pw.close();
+
+            final String expected = "cmdLineSyntax not provided";
+            final String actual = exception.getMessage();
+            assertTrue(actual.contains(expected));
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
+    @Test
+    void testPrintHelpWithAutoUsageFalseAndHeaderNull() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 9;
+    		final String cmdLineSyntax = "test";
+            final String header = null;
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "footer";
+            final boolean autoUsage = false;
+    		formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+    		pw.close();
+
+            final StringBuffer expected = new StringBuffer();
+    		expected.append("usage:");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("       te");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       st");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_1");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Nice");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_2");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Good");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(footer);
+    		expected.append(System.getProperty("line.separator"));
+    		
+    		final StringBuffer actual = new StringBuffer();
+    		Scanner myReader = new Scanner(file);
+    		while (myReader.hasNextLine()) {
+    			String data = myReader.nextLine();
+    			actual.append(data);
+    			actual.append(System.getProperty("line.separator"));
+    		}
+    		myReader.close();
+    		file.delete();
+    		
+    		assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.toString(), actual.toString());
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
+    @Test
+    void testPrintHelpWithAutoUsageFalseAndFooterNull() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 9;
+    		final String cmdLineSyntax = "test";
+            final String header = "header";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = null;
+            final boolean autoUsage = false;
+    		formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+    		pw.close();
+
+            final StringBuffer expected = new StringBuffer();
+    		expected.append("usage:");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("       te");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       st");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(header);
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_1");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Nice");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_2");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Good");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		
+    		final StringBuffer actual = new StringBuffer();
+    		Scanner myReader = new Scanner(file);
+    		while (myReader.hasNextLine()) {
+    			String data = myReader.nextLine();
+    			actual.append(data);
+    			actual.append(System.getProperty("line.separator"));
+    		}
+    		myReader.close();
+    		file.delete();
+    		
+    		assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.toString(), actual.toString());
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
+    @Test
+    void testPrintHelpWithAutoUsageFalseAndHeaderEmptyString() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 9;
+    		final String cmdLineSyntax = "test";
+            final String header = "";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "footer";
+            final boolean autoUsage = false;
+    		formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+    		pw.close();
+
+            final StringBuffer expected = new StringBuffer();
+    		expected.append("usage:");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("       te");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       st");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_1");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Nice");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_2");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Good");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(footer);
+    		expected.append(System.getProperty("line.separator"));
+    		
+    		final StringBuffer actual = new StringBuffer();
+    		Scanner myReader = new Scanner(file);
+    		while (myReader.hasNextLine()) {
+    			String data = myReader.nextLine();
+    			actual.append(data);
+    			actual.append(System.getProperty("line.separator"));
+    		}
+    		myReader.close();
+    		file.delete();
+    		
+    		assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.toString(), actual.toString());
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
+    @Test
+    void testPrintHelpWithAutoUsageFalseAndFooterEmptyString() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 9;
+    		final String cmdLineSyntax = "test";
+            final String header = "header";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "";
+            final boolean autoUsage = false;
+    		formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+    		pw.close();
+
+            final StringBuffer expected = new StringBuffer();
+    		expected.append("usage:");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("       te");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       st");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(header);
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_1");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Nice");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_2");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Good");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		
+    		final StringBuffer actual = new StringBuffer();
+    		Scanner myReader = new Scanner(file);
+    		while (myReader.hasNextLine()) {
+    			String data = myReader.nextLine();
+    			actual.append(data);
+    			actual.append(System.getProperty("line.separator"));
+    		}
+    		myReader.close();
+    		file.delete();
+    		
+    		assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.toString(), actual.toString());
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
     
-    //     Comparator<Option> expected = null;
-    //     final Comparator<Option> actual = formatter.getOptionComparator();
-    //     assertEquals(expected, actual);
-    // }
-    
+    @Test
+    void testPrintHelpWithAutoUsageFalse() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 9;
+    		final String cmdLineSyntax = "test";
+            final String header = "header";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "footer";
+            final boolean autoUsage = false;
+    		formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+    		pw.close();
+
+            final StringBuffer expected = new StringBuffer();
+    		expected.append("usage:");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("       te");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       st");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(header);
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_1");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Nice");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_2");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Good");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(footer);
+    		expected.append(System.getProperty("line.separator"));
+    		
+    		final StringBuffer actual = new StringBuffer();
+    		Scanner myReader = new Scanner(file);
+    		while (myReader.hasNextLine()) {
+    			String data = myReader.nextLine();
+    			actual.append(data);
+    			actual.append(System.getProperty("line.separator"));
+    		}
+    		myReader.close();
+    		file.delete();
+    		
+    		assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.toString(), actual.toString());
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
+    @Test
+    void testPrintHelpWithAutoUsageTrue() {
+    	try {
+    		HelpFormatter formatter = new HelpFormatter();
+    		File file = new File("test.txt");
+    		file.createNewFile();
+    		PrintWriter pw = new PrintWriter(file);
+    		final int width = 9;
+    		final String cmdLineSyntax = "test";
+            final String header = "header";
+    		Option o1 = new Option("Option_1", "Nice option");
+    		Option o2 = new Option("Option_2", "Good option");
+    		Options options = new Options();
+    		options.addOption(o1);
+    		options.addOption(o2);
+            final int leftPad = 0;
+            final int descPad = 0;
+            final String footer = "footer";
+            final boolean autoUsage = true;
+    		formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+    		pw.close();
+
+            final StringBuffer expected = new StringBuffer();
+    		expected.append("usage:");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("       te");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       st");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       [-");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       Op");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       ti");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       on");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       _1");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       ]");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       [-");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       Op");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       ti");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       on");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       _2");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append("       ]");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(header);
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_1");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Nice");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append("-Option_2");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" Good");
+    		expected.append(System.getProperty("line.separator"));
+    		expected.append(" option");
+    		expected.append(System.getProperty("line.separator"));
+            expected.append(footer);
+    		expected.append(System.getProperty("line.separator"));
+    		
+    		final StringBuffer actual = new StringBuffer();
+    		Scanner myReader = new Scanner(file);
+    		while (myReader.hasNextLine()) {
+    			String data = myReader.nextLine();
+    			actual.append(data);
+    			actual.append(System.getProperty("line.separator"));
+    		}
+    		myReader.close();
+    		file.delete();
+    		
+    		// assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.toString(), actual.toString());
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+
     @Test
     void testPrintUsageWithOptions() {
     	try {
@@ -42,13 +497,13 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o1 = new Option("Option_1", "Nice option");
     		Option o2 = new Option("Option_2", "Good option");
     		Options options = new Options();
     		options.addOption(o1);
     		options.addOption(o2);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -101,13 +556,13 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o1 = new Option("Option_1", "Nice option");
     		Option o2 = new Option("Option_2", "Good option");
     		Options options = new Options();
     		options.addOption(o1);
     		options.addOption(o2);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expectedSb = new StringBuffer();
@@ -154,7 +609,7 @@ class HelpFormatterTest {
             file.createNewFile();
             PrintWriter pw = new PrintWriter(file);
             final int width = 6;
-            final String text = "test";
+            final String app = "test";
             Option o1 = new Option("Option_1", "Nice option");
             Option o2 = new Option("Option_2", "Good option");
             o1.required = true;
@@ -162,7 +617,7 @@ class HelpFormatterTest {
             Options options = new Options();
             options.addOption(o1);
             options.addOption(o2);
-            formatter.printUsage(pw, width, text, options);
+            formatter.printUsage(pw, width, app, options);
             pw.close();
 
             final StringBuffer expected = new StringBuffer();
@@ -205,11 +660,11 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option(null, "A New Option", false, "Nice option");
     		Options options = new Options();
     		options.addOption(o);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -252,11 +707,11 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option("Option", "A New Option", true, "Nice option");
     		Options options = new Options();
     		options.addOption(o);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -299,12 +754,12 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option("Option", "A New Option", true, "Nice option");
             o.setArgName("");
     		Options options = new Options();
     		options.addOption(o);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -343,12 +798,12 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option("Option", "A New Option", true, "Nice option");
             o.setArgName("Time");
     		Options options = new Options();
     		options.addOption(o);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -391,11 +846,11 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option(null, "A New Option", true, "Nice option");
     		Options options = new Options();
     		options.addOption(o);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -442,14 +897,14 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option("Option", "Nice option");
             OptionGroup optionGroup = new OptionGroup();
             optionGroup.addOption(o);
     		Options options = new Options();
     		options.addOption(o);
             options.addOptionGroup(optionGroup);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -488,7 +943,7 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o1 = new Option("Option_1", "Nice option");
     		Option o2 = new Option("Option_2", "Good option");
             OptionGroup optionGroup = new OptionGroup();
@@ -498,7 +953,7 @@ class HelpFormatterTest {
     		options.addOption(o1);
     		options.addOption(o2);
             options.addOptionGroup(optionGroup);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -543,7 +998,7 @@ class HelpFormatterTest {
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option("Option", "Nice option");
             OptionGroup optionGroup = new OptionGroup();
             optionGroup.addOption(o);
@@ -551,7 +1006,7 @@ class HelpFormatterTest {
     		Options options = new Options();
     		options.addOption(o);
             options.addOptionGroup(optionGroup);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expected = new StringBuffer();
@@ -591,18 +1046,19 @@ class HelpFormatterTest {
 
             Comparator<Option> expected = null;
             final Comparator<Option> actual = formatter.getOptionComparator();
+            assertEquals(expected, actual);
     		File file = new File("test.txt");
     		file.createNewFile();
     		PrintWriter pw = new PrintWriter(file);
     		final int width = 6;
-    		final String text = "test";
+    		final String app = "test";
     		Option o = new Option("Option", "Nice option");
             OptionGroup optionGroup = new OptionGroup();
             optionGroup.addOption(o);
     		Options options = new Options();
     		options.addOption(o);
             options.addOptionGroup(optionGroup);
-    		formatter.printUsage(pw, width, text, options);
+    		formatter.printUsage(pw, width, app, options);
     		pw.close();
     		
     		final StringBuffer expectedSb = new StringBuffer();
@@ -641,8 +1097,8 @@ class HelpFormatterTest {
             file.createNewFile();
             PrintWriter pw = new PrintWriter(file);
             final int width = 6;
-            final String text = "test";
-            formatter.printUsage(pw, width, text);
+            final String cmdLineSyntax = "test";
+            formatter.printUsage(pw, width, cmdLineSyntax);
             pw.close();
 
             final StringBuffer expected = new StringBuffer();
@@ -861,7 +1317,7 @@ class HelpFormatterTest {
     }
 
     @Test
-    void testRenderOptionsWithWithOptionNameNullAndHasArgFalseAndHasLongOpt() {
+    void testRenderOptionsWithOptionNameNullAndHasArgFalseAndHasLongOpt() {
         HelpFormatter formatter = new HelpFormatter();
         final StringBuffer sb = new StringBuffer();
         final int width = 9;
@@ -883,7 +1339,7 @@ class HelpFormatterTest {
     }
 
     @Test
-    void testRenderOptionsWithWithOptionDescriptionNull() {
+    void testRenderOptionsWithOptionDescriptionNull() {
         HelpFormatter formatter = new HelpFormatter();
         final StringBuffer sb = new StringBuffer();
         final int width = 9;
@@ -1075,7 +1531,7 @@ class HelpFormatterTest {
     	assertEquals(expected.length(), actual.length());
         assertEquals(expected.toString(), actual.toString());
     }
-
+    
     @Test
     void testRenderWrappedTextWithWidthEqualToStringLengthAndPlainString() {
     	HelpFormatter formatter = new HelpFormatter();
@@ -1191,7 +1647,7 @@ class HelpFormatterTest {
     }
 
      @Test
-     void testFindWrapPosWithWithNewLineOutsideWidth() {
+     void testFindWrapPosWithNewLineOutsideWidth() {
      	HelpFormatter formatter = new HelpFormatter();
      	final String text = "hello\n";
      	final int width = 4;
@@ -1257,7 +1713,7 @@ class HelpFormatterTest {
      }
 
     @Test
-    void testFindWrapPosWithWithNewLineOutsideWidthAndWidthLessThanStringLengthAndCarriageReturnWithinWidth() {
+    void testFindWrapPosWithNewLineOutsideWidthAndWidthLessThanStringLengthAndCarriageReturnWithinWidth() {
     	HelpFormatter formatter = new HelpFormatter();
     	final String text = "hello\nthere";
     	final int width = 4;

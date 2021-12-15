@@ -188,7 +188,7 @@ public class OptionGroupTest {
 
         Option o2 = new Option("Option_2", "Good option");
         assertThrows(IllegalStateException.class, () -> {
-            optionGroup.setSelected(o2);;
+            optionGroup.setSelected(o2);
         });
     }
 
