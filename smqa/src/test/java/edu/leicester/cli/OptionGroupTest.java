@@ -9,6 +9,7 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OptionGroupTest {
+	
     @Test
     void testAddOptionAndToStringWithNullOptionName() {
         Option o = new Option(null, "Nice option");

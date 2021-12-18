@@ -146,7 +146,7 @@ public class OptionsTest {
         optionGroup.addOption(o2);
         options.addOptionGroup(optionGroup);
     	
-        String expected = "[ Options: [ short {o=[ option: o  :: option :: class java.lang.String ], c=[ option: c cancel  :: option :: class java.lang.String ]} ] [ long {cancel=[ option: c cancel  :: option :: class java.lang.String ]} ]";
+        final String expected = "[ Options: [ short {o=[ option: o  :: option :: class java.lang.String ], c=[ option: c cancel  :: option :: class java.lang.String ]} ] [ long {cancel=[ option: c cancel  :: option :: class java.lang.String ]} ]";
     	assertEquals(expected, options.toString());
     }
 

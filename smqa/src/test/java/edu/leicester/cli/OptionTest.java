@@ -51,30 +51,30 @@ public class OptionTest {
     
     
     @Test
-    void testgetId() {
+    void testGetId() {
     	Option option = new Option("test", "test", false, "description");
-    	int expected = 116;
+    	final int expected = 116;
     	assertEquals(option.getId(), expected);
     }
     
     @Test
-    void testgetKeyOpt() {
+    void testGetKeyOpt() {
     	Option option = new Option("test1", "test", false, "description");
-    	String expected = "test1";
+    	final String expected = "test1";
     	assertEquals(option.getKey(), expected);
     }
     
     @Test
-    void testgetKeyLongOpt() {
+    void testGetKeyLongOpt() {
     	Option option = new Option(null, "test", false, "description");
-    	String expected = "test";
+    	final String expected = "test";
     	assertEquals(option.getKey(), expected);
     }
     
     @Test
     void testSetGetType() {
     	Option option = new Option("test", "test", false, "description");
-    	Class<Option> option2 = null;
+    	final Class<Option> option2 = null;
     	option.setType(option2);
     	assertEquals(option.getType(), null);
     }
@@ -82,41 +82,41 @@ public class OptionTest {
     @Test
     void testHasLongOptTrue() {
     	Option option = new Option("test", "test", false, "description");
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasLongOpt(), expected);
     }
     
     @Test
     void testHasLongOptFalse() {
     	Option option = new Option("test", null, false, "description");
-    	boolean expected = false;
+    	final boolean expected = false;
     	assertEquals(option.hasLongOpt(), expected);
     }
     
     @Test
     void testHasArgTrueInput() {
     	Option option = new Option("test", "test", true, "description");
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasArg(), expected);
     }
     @Test
     void testHasArgFalseInput() {
     	Option option = new Option("test", "test", false, "description");
-    	boolean expected = false;
+    	final boolean expected = false;
     	assertEquals(option.hasArg(), expected);
     }
     @Test
     void testHasArgUnlimitedValues() {
     	Option option = new Option("test", "test", false, "description");
     	option.numberOfArgs = -2;
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasArg(), expected);
     }
     
     @Test
     void testSetGetArgName() {
     	Option option = new Option("test", "test", false, "description");
-    	String expected = "testing";
+    	final String expected = "testing";
     	option.setArgName(expected);
     	assertEquals(option.getArgName(), expected);
     }
@@ -124,7 +124,7 @@ public class OptionTest {
     @Test
     void testHasArgNameFalse() {
     	Option option = new Option("test", "test", false, "description");
-    	boolean expected = false;
+    	final boolean expected = false;
     	assertEquals(option.hasArgName(), expected);
     }
     
@@ -132,7 +132,7 @@ public class OptionTest {
     void testHasArgNameEmptyInput() {
     	Option option = new Option("test", "test", false, "description");
     	option.setArgName("");
-    	boolean expected = false;
+    	final boolean expected = false;
     	assertEquals(option.hasArgName(), expected);
     }
     
@@ -140,14 +140,14 @@ public class OptionTest {
     void testHasArgNameValid() {
     	Option option = new Option("test", "test", false, "description");
     	option.setArgName("Testing");
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasArgName(), expected);	
     }
     
     @Test
     void testHasArgsNumberOfArgs1() {
     	Option option = new Option("test", "test", true, "description");
-    	boolean expected = false;
+    	final boolean expected = false;
     	assertEquals(option.hasArgs(), expected);
     }
     
@@ -156,7 +156,7 @@ public class OptionTest {
     void testHasArgsNumberOfArgs10(){
     	Option option = new Option("test", "test", true, "description");
     	option.numberOfArgs = 10;
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasArgs(), expected);
     }
     
@@ -164,14 +164,14 @@ public class OptionTest {
     void testHasArgsNumberOfArgsUnlimited() {
     	Option option = new Option("test", "test", true, "description");
     	option.numberOfArgs = -2;
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasArgs(), expected);
     }
     
     @Test
     void testHasValueSeparatorEmptyValueSeperator() {
     	Option option = new Option("test", "test", true, "description");
-    	boolean expected = false;
+    	final boolean expected = false;
     	assertEquals(option.hasValueSeparator(), expected);
     }
     
@@ -179,52 +179,53 @@ public class OptionTest {
     void testHasValueSeparatorNotEmpty() {
     	Option option = new Option("test", "test", true, "description");
     	option.valuesep = 'h';
-    	boolean expected = true;
+    	final boolean expected = true;
     	assertEquals(option.hasValueSeparator(), expected);
     }
     
     
     @Test
-    void testaddValueForProcessingRuntimeException() {
+    void testAddValueForProcessingRuntimeException() {
     	Option option = new Option("test", "test", true, "description");
     	option.numberOfArgs = -1;
     	Exception exception = assertThrows(RuntimeException.class, () -> {
             option.addValueForProcessing("test");
         });
 
-        String expected = "NO_ARGS_ALLOWED";
-        String actual = exception.getMessage();
+        final String expected = "NO_ARGS_ALLOWED";
+        final String actual = exception.getMessage();
         assertTrue(actual.contains(expected));
     }
     
     @Test
-    void testprocessValueNoValueSeperator() {
+    void testProcessValueNoValueSeperator() {
     	Option option = new Option("test", "test", true, "description");
-    	String expected = "test";
+    	final String expected = "test";
     	option.addValueForProcessing("test");
     	assertEquals(option.getValue(), expected);
     }
     
     @Test
-    void testprocessValueHasValueSeperatorSize2() {
+    void testProcessValueHasValueSeperatorSize2() {
     	Option option = new Option("test", "test", true, "description");
     	option.valuesep = (' ');
-    	option.addValueForProcessing("test test");
-    	assertEquals(option.getValue(),"test test"); 
+    	final String expected = "test test";
+    	option.addValueForProcessing(expected);
+    	assertEquals(option.getValue(), expected); 
     }
     
     @Test
-    void testprocessValueHasValueSeperatorSize3() {
+    void testProcessValueHasValueSeperatorSize3() {
     	Option option = new Option("test", "test", true, "description");
     	option.valuesep = (' ');
     	option.numberOfArgs = 100;
     	option.addValueForProcessing("test test test test test");
-    	int expected = 5;
+    	final int expected = 5;
     	assertEquals(option.getValues().length, expected);
     }
     
     @Test
-    void testaddRuntimeException() {
+    void testAddRuntimeException() {
     	Option option = new Option("test", "test", false, "description");
     	option.numberOfArgs = 0;
     	
@@ -232,29 +233,29 @@ public class OptionTest {
     		option.addValueForProcessing("test test test test test test");
         });
 
-        String expected = "Cannot add value, list full.";
-        String actual = exception.getMessage();
+        final String expected = "Cannot add value, list full.";
+        final String actual = exception.getMessage();
         assertTrue(actual.contains(expected));
     }
     
     @Test
-    void testgetValueNoValues() {
+    void testGetValueNoValues() {
     	Option option = new Option("test", "test", false, "description");
     	assertEquals(option.getValue(), null);
     }
     
     @Test
-    void testgetValueIndexNoValues() {
+    void testGetValueIndexNoValues() {
     	Option option = new Option("test", "test", false, "description");
     	assertEquals(option.getValue(0), null);
     }
     
     @Test
-    void testgetValueIndexIsNotNull() {
+    void testGetValueIndexIsNotNull() {
     	Option option = new Option("test", "test", true, "description");
     	option.valuesep = (' ');
     	option.numberOfArgs = 10;
-    	String expected = "test2";
+    	final String expected = "test2";
     	option.addValueForProcessing("test1 test2");
     	assertEquals(option.getValue(1), expected);
     }
@@ -273,7 +274,7 @@ public class OptionTest {
     @Test
     void testGetValueReturnsDefault() {
     	Option option = new Option("test", "test", true, "description");
-    	String expected = "default";
+    	final String expected = "default";
     	assertEquals(option.getValue("default"), expected);
     }
     
@@ -282,7 +283,7 @@ public class OptionTest {
     	Option option = new Option("test", "test", true, "description");
     	option.valuesep = (' ');
     	option.addValueForProcessing("test1 test2");
-    	String expected = "test1 test2";
+    	final String expected = "test1 test2";
     	assertEquals(option.getValue("default"), expected);
     }
     
@@ -304,14 +305,14 @@ public class OptionTest {
     @Test
     void testToStringNoValues() {
     	Option option = new Option("test", "test", true, "description");
-    	String expected = "[ option: test test  [ARG] :: description :: class java.lang.String ]";
+    	final String expected = "[ option: test test  [ARG] :: description :: class java.lang.String ]";
     	assertEquals(option.toString(), expected);
     }
     
     @Test
     void testToStringLongOptNull() {
     	Option option = new Option("test", null, true, "description");
-    	String expected = "[ option: test  [ARG] :: description :: class java.lang.String ]";
+    	final String expected = "[ option: test  [ARG] :: description :: class java.lang.String ]";
     	assertEquals(option.toString(), expected);
     }
     
@@ -319,7 +320,7 @@ public class OptionTest {
     void testToStringHasArgs() {
     	Option option = new Option("test", "test", true, "description");
         option.numberOfArgs = -2;
-        String expected = "[ option: test test [ARG...] :: description :: class java.lang.String ]";
+        final String expected = "[ option: test test [ARG...] :: description :: class java.lang.String ]";
         assertEquals(option.toString(), expected);
     }
     
@@ -327,7 +328,7 @@ public class OptionTest {
     void testToStringTypeNULL() {
     	Option option = new Option("test", "test", true, "description");
         option.setType(null);
-        String expected = "[ option: test test  [ARG] :: description ]";
+        final String expected = "[ option: test test  [ARG] :: description ]";
         assertEquals(option.toString(), expected);
     }
     
@@ -335,7 +336,7 @@ public class OptionTest {
     void testToStringNoArg() {
     	Option option = new Option("test", "test", true, "description");
         option.numberOfArgs = 0;
-        String expected = "[ option: test test  :: description :: class java.lang.String ]";
+        final String expected = "[ option: test test  :: description :: class java.lang.String ]";
         assertEquals(option.toString(), expected);
     }
     
@@ -411,14 +412,14 @@ public class OptionTest {
     @Test
     void testHashCodeSameCode() {
     	Option option = new Option("test", "test", true, "description");
-    	int expected = 113807936;
+    	final int expected = 113807936;
     	assertEquals(option.hashCode(), expected);
     }
     
     @Test
     void testHashCodeOptAndLongOptNull() {
     	Option option = new Option(null, null, true, "description");
-    	int expected = 0;
+    	final int expected = 0;
     	assertEquals(option.hashCode(), expected);
     }
     
@@ -431,7 +432,7 @@ public class OptionTest {
     
     
     @Test
-    void testclearValues() {
+    void testClearValues() {
     	Option option = new Option("test", "test", true, "description");
     	option.addValueForProcessing("test1 test2");
     	option.clearValues();
@@ -474,36 +475,23 @@ public class OptionTest {
     }
     
     @Test
-    void testrequiresArgOptionalArgTrue(){
+    void testRequiresArgOptionalArgTrue(){
     	Option option = new Option("test", "test", true, "description");
     	option.optionalArg = true;
     	assertFalse(option.requiresArg());
     }
     
     @Test
-    void testrequiresArgOptionalArgFalse() {
+    void testRequiresArgOptionalArgFalse() {
     	Option option = new Option("test", "test", true, "description");
     	option.optionalArg = false;
     	assertTrue(option.requiresArg());
     }
     
     @Test
-    void testrequiresArgNumberArgUnlimited() {
+    void testRequiresArgNumberArgUnlimited() {
     	Option option = new Option("test", "test", true, "description");
     	option.numberOfArgs = -2;
     	assertTrue(option.requiresArg());
-    }
-    
-    /*
-     * Currently 96%
-     * 
-     * TODO
-     * - Clone exception - never thrown so impossible
-     * 		- https://stackoverflow.com/questions/5430944/java-clone-operation-calling-super-clone
-     */
-    
-    
-    
-    
-    
+    }    
 }

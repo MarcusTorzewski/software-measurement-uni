@@ -51,7 +51,6 @@ class HelpFormatterTest {
             final String actual = exception.getMessage();
             assertTrue(actual.contains(expected));
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -84,7 +83,6 @@ class HelpFormatterTest {
             final String actual = exception.getMessage();
             assertTrue(actual.contains(expected));
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -146,7 +144,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -208,7 +205,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -270,7 +266,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -332,7 +327,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -396,7 +390,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -481,10 +474,9 @@ class HelpFormatterTest {
     		myReader.close();
     		file.delete();
     		
-    		// assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -537,7 +529,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -596,7 +587,6 @@ class HelpFormatterTest {
     		assertEquals(expectedSb.length(), actualSb.length());
     		assertEquals(expectedSb.toString(), actualSb.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -647,7 +637,6 @@ class HelpFormatterTest {
             assertEquals(expected.length(), actual.length());
             assertEquals(expected.toString(), actual.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -694,7 +683,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -741,7 +729,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -785,7 +772,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -833,7 +819,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -884,7 +869,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -930,7 +914,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -982,10 +965,9 @@ class HelpFormatterTest {
     		myReader.close();
     		file.delete();
     		
-    		// assertEquals(expected.length(), actual.length());
+    		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -1032,7 +1014,6 @@ class HelpFormatterTest {
     		assertEquals(expected.length(), actual.length());
     		assertEquals(expected.toString(), actual.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -1084,7 +1065,6 @@ class HelpFormatterTest {
     		assertEquals(expectedSb.length(), actualSb.length());
     		assertEquals(expectedSb.toString(), actualSb.toString());
     	} catch (IOException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }
@@ -1120,7 +1100,6 @@ class HelpFormatterTest {
             assertEquals(expected.length(), actual.length());
             assertEquals(expected.toString(), actual.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -1170,7 +1149,6 @@ class HelpFormatterTest {
             assertEquals(expected.length(), actual.length());
             assertEquals(expected.toString(), actual.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -1204,7 +1182,6 @@ class HelpFormatterTest {
             assertEquals(expected.length(), actual.length());
             assertEquals(expected.toString(), actual.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -1239,7 +1216,6 @@ class HelpFormatterTest {
             assertEquals(expected.length(), actual.length());
             assertEquals(expected.toString(), actual.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -1276,7 +1252,6 @@ class HelpFormatterTest {
             assertEquals(expected.length(), actual.length());
             assertEquals(expected.toString(), actual.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -1618,7 +1593,7 @@ class HelpFormatterTest {
    }
    
    @Test
-   void testRenderWrappedTextWithWidthLessThanStringLengthAndWhitespaceWithinWidthAndNextLineTabStopLessThanWidthAndTextAfterWhitespaceWithTabWithWidthAndPaddingPlusTestLessThanWidth() {
+   void testRenderWrappedTextWithWidthLessThanStringLengthAndWhitespaceWithinWidthAndNextLineTabStopLessThanWidthAndTextAfterWhitespaceWithTabWithinWidthAndPaddingPlusTestLessThanWidth() {
         HelpFormatter formatter = new HelpFormatter();
         final StringBuffer sb = new StringBuffer();
         final int width = 8;
