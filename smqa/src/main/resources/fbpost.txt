@@ -13,3 +13,51 @@
 # Binaries/TSLgenerator-win8.exe fbpost.txt
 #
 # The correct execution of TSL Generator should produce the resulting file fbpost.txt.tsl. You must include this file in your submission in this same directory.
+
+#Environment Parameters
+	service:
+		available.
+		unavailable. [error]		
+
+	user:
+		login. [property login]
+		logout. [error]
+
+#Input Parameters
+	message:
+		empty. [if login]
+		withLinks. [if login]
+		withEmoji. [if login]
+		noLinks. [if login]
+		noEmojis. [if login]
+
+	photos:
+		empty. 
+		corrupted. [error]	#photo cannot be corrupted
+		1,5.
+		6. [single]	#not more than 5 photos
+		0,3. 
+		3,1. [single]	#photos cannot be more than 3mb
+
+	location:
+		empty. 
+		validPost.
+		cityName.
+		inValidPost. 	[single]
+		invalidCity.	[single]
+
+	dateTime:
+		empty. [error]
+		validFormat.
+		noYear.	[error]
+		noDate.	[error]
+		noMonth.	[error]
+		noTime.	[error]
+
+	privacy:
+		empty. [error] #privacy cannot be empty
+		Me.
+		Friends.
+		Everyone.
+		NotAnyOptions. [error]
+
