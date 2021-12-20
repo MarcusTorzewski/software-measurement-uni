@@ -13,3 +13,151 @@
 # Binaries/TSLgenerator-win8.exe fbpost.txt
 #
 # The correct execution of TSL Generator should produce the resulting file fbpost.txt.tsl. You must include this file in your submission in this same directory.
+
+#parameters
+    Message:
+        Input Size:
+            Empty. [property empty]
+            Single Character. [property single]
+            Multiple Characters. [property multiple]
+        Emoji:
+            No Emoji.
+            1 Emoji. [if !empty] [property hasEmoji]
+            Multiple Emojis. [if multiple] [property hasEmoji]
+        Link:
+            No Link.
+            Single Link. [if !hasEmoji && multiple] [property hasLink]
+            Multiple Links. [if !hasEmoji && multiple] [property hasLink]
+        Has Special Characters:
+            No Special Characters.
+            1 Special Character. [if (!empty && (single && !hasEmoji)) || multiple] [property hasSpChar]
+            Multiple Special Characters. [if multiple]
+        Has Spaces:
+            No Spaces.
+            1 Space. [if (single && !hasEmoji && !hasSpChar) || multiple]
+            Multiple Spaces. [if multiple]
+        Message Character Set:
+            Empty. [if empty]
+            Letters Only. [if !empty]
+            Numbers Only. [if !empty && !hasLink && !hasEmoji]
+            Letters and Numbers. if [multiple]
+    Image:
+        Image NULL:
+            NULL. [single] [property imageNULl]
+            Not NULL. [property imageNotNull]
+        Image Array Size:
+            Empty. [if imageNotNull] [property arrayEmpty]
+            Between 1 and 5. [if imageNotNull] [property 1and5]
+            Greater Than 5 Images. [error]
+        Images Corruped:
+            None.
+            Single. [if 1and5] [error]
+            Multiple. [if 1and5] [error]
+        Image Size:
+            No Images. [if arrayEmpty]
+            All Less Than or Equal to 3MB. [if 1and5]
+            1 Bigger Than 3MB. [if 1and5] [error]
+            Multiple Bugger Than 3MB [if 1and5] [error]
+        Image FileType:
+            None. [if arrayEmpty]
+            PNG. [if 1and5]
+            JPG. [if 1and5]
+            JPEG. [if 1and5]
+    Location:
+        Location Type:
+            Empty. [single] [property locEmp]
+            Full City Name. [property cityFull]
+            City Name Abbreviated. [property cityABV]
+            Postcode. [property postcode]
+        PostCode Is Alpha:
+            Alphanumeric. [if postcode]
+            Not Alphanumeric. [if postcode] [error]
+        PostCode Length:
+            Between 5 and 7 Characters. [if postcode] #With No Space
+            Less Than 5 And Greater Than 7 Characters. [if postcode] [error]
+        Character PostCode Starts With:
+            Letter. [if postcode]
+            Number. [if postcode] [error]
+        City Name Has Space:
+            No Space. [if cityFull]
+            1 Space. [if cityFull]
+            Multiple Spaces. [if cityFull]
+        City Abbreviates Is Valid:
+            Letters Only. [if cityABV]
+            Numbers. [if cityABV] [error]
+            Alphanumeric. [if cityABV] [error]
+            Has Special Characters. [if cityABV] [error]
+        City is Real City:
+            Yes. [if cityFull || cityABV]
+            No. [error]
+    Datetime:
+        Datetime input type:
+            Null. [error]
+            Empty. [error]
+            Single Character. [error]
+            Multiple Characters.
+        Datetime Year Size:
+            4 digits.
+            Not 4 digits. [error]
+        Datetime Month Size:
+            2 digits.
+            Not two digits. [error]
+        Datetime Day Size:
+            2 digits.
+            Not two digits. [error]
+        Datetime Contains Dash Between Year, Month and Day:
+            Yes.
+            No. [error]
+        Datetime Hours Size:
+            2 digits.
+            Not 2 digits. [error]
+        Datetime Minutes Size:
+            2 digits.
+            Not 2 digits. [error]
+        Datetime Seconds Size:
+            2 digits.
+            Not 2 digits. [error]
+        Datetime Has Colon Between Hours Minutes Seconds:
+            Yes.
+            No. [error]
+        Datetime Has Space Inbetween Date and Time:
+            Yes.
+            No. [error]
+    Privacy:
+        Privacy Null:
+            Yes. [error]
+            No. 
+        Privacy Correct Case:
+            All Caps. [property allCaps]
+            Not All Caps. [error]
+        Privacy Correct Character Set:
+            Letters. [if allCaps] [property letters]
+            Number. [error]
+            Special Characters Only. [error]
+        Privacy Contains Special Characters and Letters:
+            Yes. [error]
+            No. [if letters]
+        Privacy Selection:
+            ME. [if letters] [single]
+            FRIENDS. [if letters] [single]
+            EVERYONE. [if letters] [single]
+
+#Environment
+    Service:
+        Available.
+        Unavailable. [error]
+    Log Status:
+        Logged In.
+        Logged Out. [error]
+    No Data In Post:
+        Yes. [if empty && imageNULl && locEmp] [single]
+        No.
+        
+
+        
+            
+        
+
+        
+
+

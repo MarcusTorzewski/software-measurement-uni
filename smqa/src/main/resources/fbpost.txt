@@ -14,144 +14,144 @@
 #
 # The correct execution of TSL Generator should produce the resulting file fbpost.txt.tsl. You must include this file in your submission in this same directory.
 
-#Environment Parameters
-	Service:
-		available.
-		unavailable. [error]		
-	User:
-        Logged In.
-		Logged Out. [error]
-
-#Parameters
+#parameters
     Message:
-        Message Size:
-            empty. [property noSize]
-            Single character. [property single]
-            Multiple characters. [property multiple]
-        Message Link:
-            No link. [property noLink]
-            1 Link. [if multiple] [property hasLink] 
-            Many Links. [if multiple] [property hasLink]
-        Message Emoji:
-            No Emoji. [if (hasLink || noLink)]
-            1 Emoji. [if (noLink && !noSize)] [property Emoji]
-            Multiple Emojis. [if noLink && multiple]
-        Message Quoted:
-            Quoted. [property quoted]
-            Not Quoted. [if !noSize] [property notQuoted]
-            Improperly Quoted. [error]
-        Message has Embedded Spaces:
-            No Embedded Spaces. [if !noSize]
-            Single Embedded Space. [if (quoted && ((single && !Emoji) || multiple))] [property eSpace]
-            Multiple Embedded Spaces. [if multiple && quoted]
-        Message has embedded Quotes:
-            No Embedded Quotes. [if !noSize]
-            Single Embedded Quote. [if (quoted && ((single && !Emoji && !eSpace) || multiple))]
-            Multiple Embedded Quotes. [if multiple && quoted]
-    Image:
-        Image input is NULL:
-            null. 
-            notNull. [property notNull]
-        Image Amount:
-            Empty. [single] [if notNull] [property empty]
-            1. [if notNull] [property 1]
-            2. [if notNull] [property 2]
-            3. [if notNull] [property 3]
-            4. [if notNull] [property 4]
-            5. [if notNull] [property 5]
-            Greater than 5. [if notNull] [error]
-        Image 1:
-            No Image. [if !(1 || 2 || 3 || 4 || 5) && notNull] 
-            Corrupted Image. [if !empty && 1 || 2 || 3 || 4 || 5] [error]
-            GreaterThan3MB. [if !empty && 1 || 2 || 3 || 4 || 5] [error]
-            Valid Image. [if !empty && 1 || 2 || 3 || 4 || 5]
-        Image 2:
-            No Image. [if !(2 || 3 || 4 || 5) && notNull]
-            Corrupted Image. [if !empty && 2 || 3 || 4 || 5] [error]
-            GreaterThan3MB. [if !empty && 2 || 3 || 4 || 5] [error]
-            Valid Image. [if !empty && 2 || 3 || 4 || 5]
-        Image 3:
-            No Image. [if !(3 || 4 || 5) && notNull]
-            Corrupted Image. [if !empty && 3 || 4 || 5] [error]
-            GreaterThan3MB. [if !empty && 3 || 4 || 5] [error]
-            Valid Image. [if !empty && 3 || 4 || 5]
-        Image 4:
-            No Image. [if !(4 || 5) && notNull]
-            Corrupted Image. [if !empty && 4 || 5] [error]
-            GreaterThan3MB [if !empty && 4 || 5] [error]
-            Valid Image. [if !empty && 4 || 5]
-        Image 5:
-            No Image. [if !5 && notNull]
-            Corrupted Image. [if 5 && !empty] [error]
-            GreaterThan3MB. [if 5 && !empty] [error]
-            Valid Image. [if 5 && !empty]
-    Location:
-        Location Empty:
+        Input Size:
             Empty. [property empty]
-            NotEmpty. [property notEmpty]
+            Single Character. [property single]
+            Multiple Characters. [property multiple]
+        Emoji:
+            No Emoji.
+            1 Emoji. [if !empty] [property hasEmoji]
+            Multiple Emojis. [if multiple] [property hasEmoji]
+        Link:
+            No Link.
+            Single Link. [if !hasEmoji && multiple] [property hasLink]
+            Multiple Links. [if !hasEmoji && multiple] [property hasLink]
+        Has Special Characters:
+            No Special Characters.
+            1 Special Character. [if (!empty && (single && !hasEmoji)) || multiple] [property hasSpChar]
+            Multiple Special Characters. [if multiple]
+        Has Spaces:
+            No Spaces.
+            1 Space. [if (single && !hasEmoji && !hasSpChar) || multiple]
+            Multiple Spaces. [if multiple]
+        Message Character Set:
+            Empty. [if empty]
+            Letters Only. [if !empty]
+            Numbers Only. [if !empty && !hasLink && !hasEmoji]
+            Letters and Numbers. if [multiple]
+    Image:
+        Image NULL:
+            NULL. [single] [property imageNULl]
+            Not NULL. [property imageNotNull]
+        Image Array Size:
+            Empty. [if imageNotNull] [property arrayEmpty]
+            Between 1 and 5. [if imageNotNull] [property 1and5]
+            Greater Than 5 Images. [error]
+        Images Corruped:
+            None.
+            Single. [if 1and5] [error]
+            Multiple. [if 1and5] [error]
+        Image Size:
+            No Images. [if arrayEmpty]
+            All Less Than or Equal to 3MB. [if 1and5]
+            1 Bigger Than 3MB. [if 1and5] [error]
+            Multiple Bugger Than 3MB [if 1and5] [error]
+        Image FileType:
+            None. [if arrayEmpty]
+            PNG. [if 1and5]
+            JPG. [if 1and5]
+            JPEG. [if 1and5]
+    Location:
         Location Type:
-            Postcode. [if notEmpty] [property postcode] 
-            City. [if notEmpty] [property city] 
-        Outward Code Postcode:
-            Between 2and4. [if postcode]
-            Less than 2 or greater than 4. [error]
-        Inward Code Postcode:
-            3 Characters. [if postcode]
-            Anything other than 3. [error]
-        Begins With Number Postcode:
-            Yes. [if postcode]
-            No. [error]
-        City is a real city:
-            Yes. [if city]
+            Empty. [single] [property locEmp]
+            Full City Name. [property cityFull]
+            City Name Abbreviated. [property cityABV]
+            Postcode. [property postcode]
+        PostCode Is Alpha:
+            Alphanumeric. [if postcode]
+            Not Alphanumeric. [if postcode] [error]
+        PostCode Length:
+            Between 5 and 7 Characters. [if postcode] #With No Space
+            Less Than 5 And Greater Than 7 Characters. [if postcode] [error]
+        Character PostCode Starts With:
+            Letter. [if postcode]
+            Number. [if postcode] [error]
+        City Name Has Space:
+            No Space. [if cityFull]
+            1 Space. [if cityFull]
+            Multiple Spaces. [if cityFull]
+        City Abbreviates Is Valid:
+            Letters Only. [if cityABV]
+            Numbers. [if cityABV] [error]
+            Alphanumeric. [if cityABV] [error]
+            Has Special Characters. [if cityABV] [error]
+        City is Real City:
+            Yes. [if cityFull || cityABV]
             No. [error]
     Datetime:
-        DatetimeEmpty:
+        Datetime input type:
+            Null. [error]
             Empty. [error]
-            NotEmpty.
-        DateYearSize:
+            Single Character. [error]
+            Multiple Characters.
+        Datetime Year Size:
             4 digits.
             Not 4 digits. [error]
-        DateMonthSize:
+        Datetime Month Size:
             2 digits.
-            Not 2 digits. [error]
-        DateDaySize:
+            Not two digits. [error]
+        Datetime Day Size:
             2 digits.
-            Not 2 digits. [error]
-        DateHasDashBetweenYearMonthDay:
+            Not two digits. [error]
+        Datetime Contains Dash Between Year, Month and Day:
             Yes.
             No. [error]
-        TimeHoursSize:
+        Datetime Hours Size:
             2 digits.
             Not 2 digits. [error]
-        TimeMinutesSize:
+        Datetime Minutes Size:
             2 digits.
             Not 2 digits. [error]
-        TimeSecondsSize:
+        Datetime Seconds Size:
             2 digits.
             Not 2 digits. [error]
-        TimeHasColonBetweenHoursMinuetsSeconds:
+        Datetime Has Colon Between Hours Minutes Seconds:
             Yes.
             No. [error]
-        HasSpaceInMiddleDateAndTime:
+        Datetime Has Space Inbetween Date and Time:
             Yes.
             No. [error]
     Privacy:
         Privacy Null:
             Yes. [error]
-            No.
-        Privacy Has Number:
+            No. 
+        Privacy Correct Case:
+            All Caps. [property allCaps]
+            Not All Caps. [error]
+        Privacy Correct Character Set:
+            Letters. [if allCaps] [property letters]
+            Number. [error]
+            Special Characters Only. [error]
+        Privacy Contains Special Characters and Letters:
             Yes. [error]
-            No.
-        Privacy Caps:
-            All Caps.
-            No caps. [error]
-        Privacy Has Space:
-            Yes. [error]
-            No.
-        Privacy is Valid:
-            Is Either ME, FRIENDS, EVERYONE.
-            Other. [error]
+            No. [if letters]
+        Privacy Selection:
+            ME. [if letters] [single]
+            FRIENDS. [if letters] [single]
+            EVERYONE. [if letters] [single]
 
+#Environment
+    Service:
+        Available.
+        Unavailable. [error]
+    Log Status:
+        Logged In.
+        Logged Out. [error]
+    No Data In Post:
+        Yes. [if empty && imageNULl && locEmp] [single]
+        No.
         
 
         
