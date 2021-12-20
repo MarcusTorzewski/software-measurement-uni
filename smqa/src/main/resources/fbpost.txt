@@ -15,49 +15,149 @@
 # The correct execution of TSL Generator should produce the resulting file fbpost.txt.tsl. You must include this file in your submission in this same directory.
 
 #Environment Parameters
-	service:
+	Service:
 		available.
 		unavailable. [error]		
+	User:
+        Logged In.
+		Logged Out. [error]
 
-	user:
-		login. [property login]
-		logout. [error]
+#Parameters
+    Message:
+        Message Size:
+            empty. [property noSize]
+            Single character. [property single]
+            Multiple characters. [property multiple]
+        Message Link:
+            No link. [property noLink]
+            1 Link. [if multiple] [property hasLink] 
+            Many Links. [if multiple] [property hasLink]
+        Message Emoji:
+            No Emoji. [if (hasLink || noLink)]
+            1 Emoji. [if (noLink && !noSize)] [property Emoji]
+            Multiple Emojis. [if noLink && multiple]
+        Message Quoted:
+            Quoted. [property quoted]
+            Not Quoted. [if !noSize] [property notQuoted]
+            Improperly Quoted. [error]
+        Message has Embedded Spaces:
+            No Embedded Spaces. [if !noSize]
+            Single Embedded Space. [if (quoted && ((single && !Emoji) || multiple))] [property eSpace]
+            Multiple Embedded Spaces. [if multiple && quoted]
+        Message has embedded Quotes:
+            No Embedded Quotes. [if !noSize]
+            Single Embedded Quote. [if (quoted && ((single && !Emoji && !eSpace) || multiple))]
+            Multiple Embedded Quotes. [if multiple && quoted]
+    Image:
+        Image input is NULL:
+            null. 
+            notNull. [property notNull]
+        Image Amount:
+            Empty. [single] [if notNull] [property empty]
+            1. [if notNull] [property 1]
+            2. [if notNull] [property 2]
+            3. [if notNull] [property 3]
+            4. [if notNull] [property 4]
+            5. [if notNull] [property 5]
+            Greater than 5. [if notNull] [error]
+        Image 1:
+            No Image. [if !(1 || 2 || 3 || 4 || 5) && notNull] 
+            Corrupted Image. [if !empty && 1 || 2 || 3 || 4 || 5] [error]
+            GreaterThan3MB. [if !empty && 1 || 2 || 3 || 4 || 5] [error]
+            Valid Image. [if !empty && 1 || 2 || 3 || 4 || 5]
+        Image 2:
+            No Image. [if !(2 || 3 || 4 || 5) && notNull]
+            Corrupted Image. [if !empty && 2 || 3 || 4 || 5] [error]
+            GreaterThan3MB. [if !empty && 2 || 3 || 4 || 5] [error]
+            Valid Image. [if !empty && 2 || 3 || 4 || 5]
+        Image 3:
+            No Image. [if !(3 || 4 || 5) && notNull]
+            Corrupted Image. [if !empty && 3 || 4 || 5] [error]
+            GreaterThan3MB. [if !empty && 3 || 4 || 5] [error]
+            Valid Image. [if !empty && 3 || 4 || 5]
+        Image 4:
+            No Image. [if !(4 || 5) && notNull]
+            Corrupted Image. [if !empty && 4 || 5] [error]
+            GreaterThan3MB [if !empty && 4 || 5] [error]
+            Valid Image. [if !empty && 4 || 5]
+        Image 5:
+            No Image. [if !5 && notNull]
+            Corrupted Image. [if 5 && !empty] [error]
+            GreaterThan3MB. [if 5 && !empty] [error]
+            Valid Image. [if 5 && !empty]
+    Location:
+        Location Empty:
+            Empty. [property empty]
+            NotEmpty. [property notEmpty]
+        Location Type:
+            Postcode. [if notEmpty] [property postcode] 
+            City. [if notEmpty] [property city] 
+        Outward Code Postcode:
+            Between 2and4. [if postcode]
+            Less than 2 or greater than 4. [error]
+        Inward Code Postcode:
+            3 Characters. [if postcode]
+            Anything other than 3. [error]
+        Begins With Number Postcode:
+            Yes. [if postcode]
+            No. [error]
+        City is a real city:
+            Yes. [if city]
+            No. [error]
+    Datetime:
+        DatetimeEmpty:
+            Empty. [error]
+            NotEmpty.
+        DateYearSize:
+            4 digits.
+            Not 4 digits. [error]
+        DateMonthSize:
+            2 digits.
+            Not 2 digits. [error]
+        DateDaySize:
+            2 digits.
+            Not 2 digits. [error]
+        DateHasDashBetweenYearMonthDay:
+            Yes.
+            No. [error]
+        TimeHoursSize:
+            2 digits.
+            Not 2 digits. [error]
+        TimeMinutesSize:
+            2 digits.
+            Not 2 digits. [error]
+        TimeSecondsSize:
+            2 digits.
+            Not 2 digits. [error]
+        TimeHasColonBetweenHoursMinuetsSeconds:
+            Yes.
+            No. [error]
+        HasSpaceInMiddleDateAndTime:
+            Yes.
+            No. [error]
+    Privacy:
+        Privacy Null:
+            Yes. [error]
+            No.
+        Privacy Has Number:
+            Yes. [error]
+            No.
+        Privacy Caps:
+            All Caps.
+            No caps. [error]
+        Privacy Has Space:
+            Yes. [error]
+            No.
+        Privacy is Valid:
+            Is Either ME, FRIENDS, EVERYONE.
+            Other. [error]
 
-#Input Parameters
-	message:
-		empty. [if login]
-		withLinks. [if login]
-		withEmoji. [if login]
-		noLinks. [if login]
-		noEmojis. [if login]
+        
 
-	photos:
-		empty. 
-		corrupted. [error]	#photo cannot be corrupted
-		1,5.
-		6. [single]	#not more than 5 photos
-		0,3. 
-		3,1. [single]	#photos cannot be more than 3mb
+        
+            
+        
 
-	location:
-		empty. 
-		validPost.
-		cityName.
-		inValidPost. 	[single]
-		invalidCity.	[single]
+        
 
-	dateTime:
-		empty. [error]
-		validFormat.
-		noYear.	[error]
-		noDate.	[error]
-		noMonth.	[error]
-		noTime.	[error]
-
-	privacy:
-		empty. [error] #privacy cannot be empty
-		Me.
-		Friends.
-		Everyone.
-		NotAnyOptions. [error]
 
